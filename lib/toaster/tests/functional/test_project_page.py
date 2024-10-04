@@ -715,7 +715,7 @@ class TestProjectPage(SeleniumFunctionalTestCase):
         self.assertTrue(self.find('.page-header h1').is_displayed())
 
         # check add layer button works
-        remove_layer_btn = self.find('#add-remove-layer-btn')
+        remove_layer_btn = self.find('#add-remove-layer-btn[@data-directive=remove]')
         remove_layer_btn.click()
         self.wait_until_visible('#change-notification', poll=2)
         change_notification = self.find('#change-notification')
@@ -723,7 +723,7 @@ class TestProjectPage(SeleniumFunctionalTestCase):
             f'You have removed 1 layer from your project', str(change_notification.text)
         )
         # check add layer button works, 18 is the random layer id
-        add_layer_btn = self.find('#add-remove-layer-btn')
+        add_layer_btn = self.find('#add-remove-layer-btn[@data-directive=add]')
         add_layer_btn.click()
         self.wait_until_visible('#change-notification')
         change_notification = self.find('#change-notification')
