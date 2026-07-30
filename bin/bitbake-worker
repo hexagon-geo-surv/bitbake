@@ -296,8 +296,10 @@ def fork_off_task(cfg, data, databuilder, workerdata, extraconfigdata, runtask):
                     if not bb.utils.landlock_restrict_network():
                         logger.debug("Skipping Landlock network restriction for %s since kernel lacks ABI v4+ support." % taskname)
 
-                # exported_vars() returns a generator which *cannot* be passed to os.environ.update() 
-                # successfully. We also need to unset anything from the environment which shouldn't be there 
+                # exported_vars() expands each value, so it must be called before
+                # empty_environment() below: an expansion that shells out needs the
+                # environment bitbake was started with. We also need to unset
+                # anything from the environment which shouldn't be there
                 exports = bb.data.exported_vars(the_data)
 
                 bb.utils.empty_environment()
